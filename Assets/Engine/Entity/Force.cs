@@ -31,8 +31,15 @@ namespace Engine.Entity {
 			} else if (x_component == 0 && Mathf.Sign(y_component) == -1) {
 				// Force is vertically downwards.
 				direction2D = 270;
-			} else if (x_component != 0) {
-				direction2D = 1 / Mathf.Tan(y_component / x_component);
+			} else if (y_component == 0 && Mathf.Sign(x_component) == 1) {
+				// Force is horizontally right.
+				direction2D = 0;
+			} else if (y_component == 0 && Mathf.Sign(x_component) == -1) {
+				// Force is horizontally left.
+				direction2D = 180;
+			} else if (x_component != 0 && y_component != 0) {
+				// Using inverse tangent.
+				direction2D = (Mathf.Atan2(y_component, x_component)) * (180 / Mathf.PI);
 			}
 		}
 

@@ -32,6 +32,19 @@ namespace Engine {
 			return resultant;
 		}
 
+		public static Force GetForceGivenComponent(float[] component) {
+			// Components are in order (array order matters!)
+			// component[0] => i
+			// component[1] => j
+			// component[2] => k
+			return new Force(component[0], component[1], component[2]);
+		}
+
+		public static Force GetForceGivenMagnitudeAndDirection(float magnitude, float direction) {
+			// Return the force created.
+			return new Force(direction, magnitude);
+		}
+
 	}
 
 }

@@ -8,7 +8,7 @@ namespace Engine {
 	public class PhyEngine : MonoBehaviour {
 
 		/**
-		 * A class to manage all thr physics engines needed for necessary simulation and only to use those for optimzation.
+		 * A class to manage all the physics engines needed for necessary simulation and only to use those for optimzation.
 		 */
 
 		// Start is called before the first frame update
