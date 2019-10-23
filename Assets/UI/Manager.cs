@@ -96,7 +96,6 @@ namespace UI {
 			float direction = float.Parse(forceDataInputArray[4].text);
 			// Get the force # as index to save.
 			int indexToSaveOn = forceOptionDropdown.value;
-			Debug.Log(indexToSaveOn);
 			// Save on the index.
 			forceDataStored[indexToSaveOn] = new float[] {
 			i,
@@ -127,7 +126,8 @@ namespace UI {
 			inputDirection
 			};
 			foreach (TMP_InputField input in forceDataInputArrayOptionOne) {
-				if (input.text != "" && float.Parse(input.text) != 0 && ForceDataInputFieldValueWasChanged(input, Array.IndexOf(forceDataInputArray, input))) {
+				// Make sure the field is empty and that the value was changed.
+				if (input.text != "" && ForceDataInputFieldValueWasChanged(input, Array.IndexOf(forceDataInputArray, input))) {
 					// Resolve the components.
 					float i = float.Parse(forceDataInputArrayOptionOne[0].text);
 					float j = float.Parse(forceDataInputArrayOptionOne[1].text);
@@ -149,7 +149,8 @@ namespace UI {
 				}
 			}
 			foreach (TMP_InputField input in forceDataInputArrayOptionTwo) {
-				if (input.text != "" && float.Parse(input.text) != 0 && ForceDataInputFieldValueWasChanged(input, Array.IndexOf(forceDataInputArray, input))) {
+				// Make sure the field is empty and that the value was changed.
+				if (input.text != "" && ForceDataInputFieldValueWasChanged(input, Array.IndexOf(forceDataInputArray, input))) {
 					// Resolve the magnitude and direction.
 					float magnitude = float.Parse(forceDataInputArrayOptionTwo[0].text);
 					float direction = float.Parse(forceDataInputArrayOptionTwo[1].text);
@@ -171,6 +172,10 @@ namespace UI {
 			int indexToCheck = forceOptionDropdown.value;
 			// Check if the force's data was even saved.
 			if (forceDataStored[indexToCheck] == null) {
+				// In case it hasn't been saved, checks if the value of it was different from the original values.
+				if (input.text == "0") {
+					return false;
+				}
 				return true;
 			}
 			// If the data is saved, check if the value is different.
@@ -194,7 +199,66 @@ namespace UI {
 			foreach (TMP_InputField input in forceDataInputArray) {
 				input.text = "0";
 			}
-			int value = forceOptionDropdown.value;
+			// Check if the values have been saved before. If not, no need to search it up.
+			int indexToCheck = forceOptionDropdown.value;
+			if (forceDataStored[indexToCheck] == null) {
+				return;
+			}
+			// Since the values are saved. Display the previous values.
+			// Convert the values to string (because text only displays strings) and set them to display.
+			inputI.text = forceDataStored[indexToCheck][0].ToString();
+			inputJ.text = forceDataStored[indexToCheck][1].ToString();
+			inputK.text = forceDataStored[indexToCheck][2].ToString();
+			inputMagnitude.text = forceDataStored[indexToCheck][3].ToString();
+			inputDirection.text = forceDataStored[indexToCheck][4].ToString();
+		}
+
+		public void OnAddForceButtonClick() {
+			// Check if more than one force has been selected.
+			if (int.Parse(numberOfTotalForces.text) > 1) {
+				// Create an array which will only store defined values.
+				float[][] forceDataStoredDefined = new float[99][];
+				foreach (float[] set in forceDataStored) {
+					// Check if values were actually saved or not.
+					if (set != null) {
+						// Find a not yet defined value in the array.
+						int indexToSaveOn = Array.IndexOf(forceDataStoredDefined, null);
+						// In case the array is full - logically speaking, it should never be full for all values to be added.
+						if (indexToSaveOn != -1) {
+							forceDataStoredDefined[indexToSaveOn] = set;
+						}
+					}
+				}
+				// Check if more than one value was defined.
+				if (Array.IndexOf(forceDataStoredDefined, null) > 1) {
+					// Create an array of forces.
+					Force[] arrayOfForce = new Force[99];
+					foreach (float[] forceValue in forceDataStoredDefined) {
+						// Error found here : NullReferenceException: Object reference not set to an instance of an object
+						float x = forceValue[0];
+						float y = forceValue[1];
+						float z = forceValue[2];
+						// Find a not yet defined value in the array.
+						int indexToSaveOn = Array.IndexOf(arrayOfForce, null);
+						// In case the array is full - logically speaking, it should never be full for all values to be added.
+						if (indexToSaveOn != -1) {
+							arrayOfForce[indexToSaveOn] = new Force(x, y, z);
+						}
+					}
+					// Check if more than one value was defined.
+					if (Array.IndexOf(arrayOfForce, null) > 1) {
+						// Calculated the Resultant Force.
+						Force resultForce = ForceEngine.AddArrayOfForce(arrayOfForce);
+						// For now display here.
+						// Convert the values to string (because text only displays strings) and set them to display.
+						inputI.text = resultForce.x.ToString();
+						inputJ.text = resultForce.y.ToString();
+						inputK.text = resultForce.z.ToString();
+						inputMagnitude.text = resultForce.magnitude.ToString();
+						inputDirection.text = resultForce.direction2D.ToString();
+					}
+				}
+			}
 		}
 
 	}
