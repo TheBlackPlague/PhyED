@@ -1,39 +1,19 @@
+[logo]: https://raw.githubusercontent.com/TheBlackPlague/PhyED/master/Assets/Graphical/Black%2C%20White%20and%20Pink%20Cube%20Kyobi%20Games%20Logo.png?token=AKQUNUYRD4KUY3BKHMI4X625XIXPA "Logo Title Text 2"
+
 # PhyED
 A Physics Engine made for educational purposes.
+
+![alt text][logo]
 
 This project is intended to be used in an educational environment and is designed accordingly, however may be used in any way according to the license. 
 
 ### Contribution
-We are not accepting contributions for this project yet.
+Contributions are not accepted for this project yet.
 
 If you would like to request an edit or a feature, please create a issue in the `Issues Tab`.
 
 ## License
 
-**A copy of this license is included in the project.**
-
-```
-MIT License
-
-Copyright (c) 2019 Shaheryar Sohail
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+**The license is updated and available [here](https://github.com/TheBlackPlague/PhyED/blob/master/LICENSE "PhyED License").**
 
 **Made with** :heart: **by Shaheryar Sohail.**

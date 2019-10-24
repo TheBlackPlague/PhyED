@@ -26,6 +26,10 @@ namespace Engine {
 			Force resultant = new Force(0, 0, 0);
 			// Add the forces together.
 			foreach (Force force in forces) {
+				// In case the array has 1 or more undefined indexes. 
+				if (force == null) {
+					return resultant;
+				}
 				resultant = AddTwoForce(resultant, force);
 			}
 			// Return the resultant. 

@@ -13,12 +13,19 @@ namespace UI {
 
 		public GameObject forcePanel;
 		public GameObject objectPanel;
+		public GameObject resultForcePanel;
+		public GameObject graphVector;
 		public TMP_InputField numberOfTotalForces;
 		public TMP_InputField inputI;
 		public TMP_InputField inputJ;
 		public TMP_InputField inputK;
 		public TMP_InputField inputMagnitude;
 		public TMP_InputField inputDirection;
+		public TMP_InputField inputIResult;
+		public TMP_InputField inputJResult;
+		public TMP_InputField inputKResult;
+		public TMP_InputField inputMagnitudeResult;
+		public TMP_InputField inputDirectionResult;
 		public TMP_Dropdown objectTypeDropdown;
 		public TMP_Dropdown forceOptionDropdown;
 		// Stored values for comparison reasons and optimization.
@@ -84,6 +91,10 @@ namespace UI {
 					input.text = "0";
 					forceDataStored = new float[99][];
 				}
+				// Set the graph vector's directions.
+				graphVector.transform.rotation = Quaternion.Euler(0, 0, 0);
+				// Turn off the graph vector because it isn't valuable here. 
+				graphVector.SetActive(false);
 			}
 		}
 
@@ -143,6 +154,16 @@ namespace UI {
 					// Convert the values to string (because text only displays strings) and set them to display.
 					inputMagnitude.text = calculatedForce.magnitude.ToString();
 					inputDirection.text = calculatedForce.direction2D.ToString();
+					// Check if vector needs to be displayed or not.
+					if (calculatedForce.magnitude > 0) {
+						// Turn on the graph vector. 
+						graphVector.SetActive(true);
+					} else {
+						// Turn off the graph vector because it isn't valuable here. 
+						graphVector.SetActive(false);
+					}
+					// Set the graph vector's directions.
+					graphVector.transform.rotation = Quaternion.Euler(0, 0, calculatedForce.direction2D);
 					// Save all the values.
 					SaveValueOfForceData(forceDataInputArray);
 					return;
@@ -154,12 +175,26 @@ namespace UI {
 					// Resolve the magnitude and direction.
 					float magnitude = float.Parse(forceDataInputArrayOptionTwo[0].text);
 					float direction = float.Parse(forceDataInputArrayOptionTwo[1].text);
+					// If force is given with negative value on the horizontal just via magnitude.
+					if (Math.Sign(magnitude) == -1 && direction == 0) {
+						direction = 180;
+					}
 					// Get the calculated force.
 					Force calculatedForce = ForceEngine.GetForceGivenMagnitudeAndDirection(magnitude, direction);
 					// Convert the values to string (because text only displays strings) and set them to display.
 					inputI.text = calculatedForce.x.ToString();
 					inputJ.text = calculatedForce.y.ToString();
 					inputK.text = calculatedForce.z.ToString();
+					// Check if vector needs to be displayed or not.
+					if (magnitude > 0) {
+						// Turn on the graph vector. 
+						graphVector.SetActive(true);
+					} else {
+						// Turn off the graph vector because it isn't valuable here. 
+						graphVector.SetActive(false);
+					}
+					// Set the graph vector's directions.
+					graphVector.transform.rotation = Quaternion.Euler(0, 0, direction);
 					// Save all the values.
 					SaveValueOfForceData(forceDataInputArray);
 					return;
@@ -202,6 +237,10 @@ namespace UI {
 			// Check if the values have been saved before. If not, no need to search it up.
 			int indexToCheck = forceOptionDropdown.value;
 			if (forceDataStored[indexToCheck] == null) {
+				// Turn off the graph vector because it isn't valuable here. 
+				graphVector.SetActive(false);
+				// Set the graph vector's directions.
+				graphVector.transform.rotation = Quaternion.Euler(0, 0, 0);
 				return;
 			}
 			// Since the values are saved. Display the previous values.
@@ -211,6 +250,16 @@ namespace UI {
 			inputK.text = forceDataStored[indexToCheck][2].ToString();
 			inputMagnitude.text = forceDataStored[indexToCheck][3].ToString();
 			inputDirection.text = forceDataStored[indexToCheck][4].ToString();
+			// Check if vector needs to be displayed or not.
+			if (forceDataStored[indexToCheck][3] > 0) {
+				// Turn on the graph vector. 
+				graphVector.SetActive(true);
+			} else {
+				// Turn off the graph vector because it isn't valuable here. 
+				graphVector.SetActive(false);
+			}
+			// Set the graph vector's directions.
+			graphVector.transform.rotation = Quaternion.Euler(0, 0, forceDataStored[indexToCheck][4]);
 		}
 
 		public void OnAddForceButtonClick() {
@@ -234,7 +283,10 @@ namespace UI {
 					// Create an array of forces.
 					Force[] arrayOfForce = new Force[99];
 					foreach (float[] forceValue in forceDataStoredDefined) {
-						// Error found here : NullReferenceException: Object reference not set to an instance of an object
+						// Checks if the value is null and all forces have beem created.
+						if (forceValue == null) {
+							break;
+						}
 						float x = forceValue[0];
 						float y = forceValue[1];
 						float z = forceValue[2];
@@ -242,6 +294,7 @@ namespace UI {
 						int indexToSaveOn = Array.IndexOf(arrayOfForce, null);
 						// In case the array is full - logically speaking, it should never be full for all values to be added.
 						if (indexToSaveOn != -1) {
+							// Create the force and store.
 							arrayOfForce[indexToSaveOn] = new Force(x, y, z);
 						}
 					}
@@ -249,13 +302,24 @@ namespace UI {
 					if (Array.IndexOf(arrayOfForce, null) > 1) {
 						// Calculated the Resultant Force.
 						Force resultForce = ForceEngine.AddArrayOfForce(arrayOfForce);
-						// For now display here.
+						// Turn on the result panel.
+						resultForcePanel.SetActive(true);
 						// Convert the values to string (because text only displays strings) and set them to display.
-						inputI.text = resultForce.x.ToString();
-						inputJ.text = resultForce.y.ToString();
-						inputK.text = resultForce.z.ToString();
-						inputMagnitude.text = resultForce.magnitude.ToString();
-						inputDirection.text = resultForce.direction2D.ToString();
+						inputIResult.text = resultForce.x.ToString();
+						inputJResult.text = resultForce.y.ToString();
+						inputKResult.text = resultForce.z.ToString();
+						inputMagnitudeResult.text = resultForce.magnitude.ToString();
+						inputDirectionResult.text = resultForce.direction2D.ToString();
+						// Check if vector needs to be displayed or not.
+						if (resultForce.magnitude > 0) {
+							// Turn on the graph vector. 
+							graphVector.SetActive(true);
+						} else {
+							// Turn off the graph vector because it isn't valuable here. 
+							graphVector.SetActive(false);
+						}
+						// Set the graph vector's directions.
+						graphVector.transform.rotation = Quaternion.Euler(0, 0, resultForce.direction2D);
 					}
 				}
 			}
