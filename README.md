@@ -1,9 +1,7 @@
-[logo]: https://raw.githubusercontent.com/TheBlackPlague/PhyED/master/Assets/Graphical/Black%2C%20White%20and%20Pink%20Cube%20Kyobi%20Games%20Logo.png?token=AKQUNUYRD4KUY3BKHMI4X625XIXPA "Logo Title Text 2"
-
 # PhyED
 A Physics Engine made for educational purposes.
 
-![alt text][logo]
+![alt text][https://github.com/TheBlackPlague/PhyED/blob/master/Assets/Graphical/GLOBAL/PhyED%20Icon%20Transparent.png?raw=true]
 
 This project is intended to be used in an educational environment and is designed accordingly, however may be used in any way according to the license. 
 
