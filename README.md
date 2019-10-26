@@ -1,7 +1,7 @@
 # PhyED
 A Physics Engine made for educational purposes.
 
-![alt text][https://github.com/TheBlackPlague/PhyED/blob/master/Assets/Graphical/GLOBAL/PhyED%20Icon%20Transparent.png?raw=true]
+<img src="https://i.ibb.co/RpzX2c0/Phy-ED-Icon-Transparent.png" alt="PhyED Logo" border="0" width="150" height="150"></a>
 
 This project is intended to be used in an educational environment and is designed accordingly, however may be used in any way according to the license. 
 
