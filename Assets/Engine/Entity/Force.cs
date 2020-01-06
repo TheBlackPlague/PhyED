@@ -68,8 +68,9 @@ namespace Engine.Entity {
 				// Values repeat after 360.
 				direction = direction % 360;
 				// Try the construction again after finding the non-repeated value.
-				x = new Force(direction, _magnitude).x;
-				y = new Force(direction, _magnitude).y;
+				Force recursiveForce = new Force(direction, _magnitude);
+				x = recursiveForce.x;
+				y = recursiveForce.y;
 			} else {
 				// X component using the formula: V_x = V * cos(dir)
 				x = magnitude * Mathf.Cos(direction * (Mathf.PI / 180));
